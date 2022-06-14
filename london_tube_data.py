@@ -41,7 +41,11 @@ if __name__ == "__main__":
             action, *name_tokens = query.split(" ")
             name = " ".join(name_tokens)
             if action == "line":
-                for stations in get_stations(cur, name):
+                stations_per_line = list(get_stations(cur, name))
+                if len(stations_per_line) == 0:
+                    print(f"{name} line has no stations")
+                    continue
+                for stations in stations_per_line:
                     print(f"{name} line stations: {', '.join(stations)}")
             elif action == "station":
                 lines = get_lines(cur, name)
